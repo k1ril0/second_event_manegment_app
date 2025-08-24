@@ -1,12 +1,16 @@
 package com.event.app;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class LogInPageController {
     @FXML
-    private Button helloButton;
+    private Button LogInButton;
     @FXML
     private TextField NameField;
     @FXML
@@ -14,11 +18,12 @@ public class LogInPageController {
 
 
     @FXML
-    private void LogIn(){
-        helloButton.setOnAction(e ->{
+    private void LogIn() throws Exception{
+        LogInButton.setOnAction(e ->{
+            try{
             switch (CheckStatments()) {
                 case"BOTH_FIELDS_EMPTHY":
-                System.out.println("both fields are empthy");    
+                System.out.println("BOTH FIELDS ARE EMPTHY ");    
                  break;
                 case"NAME_FIELD_EMPTHY":
                 System.out.println("NAME FIELD EMPTHY");
@@ -27,9 +32,13 @@ public class LogInPageController {
                 System.out.println("PASSWORD FIELD EMPTHY");
                 break;
                 case"ALL_GOOD":
-                System.out.println("ALL_GOOD");
+                System.out.println("ALL GOOD");
+                GoToNextPage(LogInButton);
                 break;
             }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         });
     }
     private String CheckStatments(){
@@ -49,6 +58,14 @@ public class LogInPageController {
             e.printStackTrace();
             return null;
         }
+    }
+    private void GoToNextPage(Button expectedButton) throws Exception{
+       Parent root = FXMLLoader.load(getClass().getResource("/AddMenuOfEvent.fxml"));
+       Scene nextScene = new Scene(root,600,400);
+       Stage secondStage = (Stage) expectedButton.getScene().getWindow();
+       secondStage.setScene(nextScene);
+       secondStage.setTitle("MAIN PPAGE");
+       secondStage.show();       
     }
     
 }
