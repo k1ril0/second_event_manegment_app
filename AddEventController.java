@@ -10,11 +10,16 @@ import com.google.protobuf.Internal.ListAdapter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 
 public class AddEventController implements Initializable {
   //all good here except CheckStatments method but in futer fix i can make him better
@@ -34,6 +39,8 @@ public class AddEventController implements Initializable {
     private ChoiceBox TypeChoiceBox = new ChoiceBox<String>();
     @FXML
     private TextField NameOfEventTextField;
+    @FXML
+    private Button BackToMenuButton;
 
 
       String[] ListOfEvents = { "Conference","Workshop","Webinar","Seminar","Concert","Festival","Meetup","Networking Event",
@@ -124,6 +131,19 @@ public class AddEventController implements Initializable {
             System.out.println("all good with typr of event ");
           }       
           });
+        }
+        @FXML
+        private void GetBackToTheMenu(){
+          try{
+           Parent root = FXMLLoader.load(getClass().getResource("/MainPage.fxml"));
+           Stage BackToTheMenuStage = (Stage) BackToMenuButton.getScene().getWindow();
+           Scene BackToTheMenuScene = new Scene(root,600,400);
+           BackToTheMenuStage.setScene(BackToTheMenuScene);
+           BackToTheMenuStage.show();
+          }catch(Exception e){
+            e.printStackTrace();
+          }
+
         }
     
       

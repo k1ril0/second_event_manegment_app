@@ -60,7 +60,7 @@ public class LogInPageController {
         }
     }
     private void GoToNextPage(Button expectedButton) throws Exception{
-       Parent root = FXMLLoader.load(getClass().getResource("/AddMenuOfEvent.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("/MainPage.fxml"));
        Scene nextScene = new Scene(root,600,400);
        Stage secondStage = (Stage) expectedButton.getScene().getWindow();
        secondStage.setScene(nextScene);
