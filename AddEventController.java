@@ -109,7 +109,9 @@ public class AddEventController implements Initializable {
           }else if(MothChoiceBox.getValue()==null && DayChoiceBox.getValue()==null && YearChoiceBox.getValue()==null){
            return StatusOfChoiceBox = "ALL_cHOICE_BOX_ARE_EMPTHY";
           }else{
+            GetBackToTheMenu();
             return StatusOfChoiceBox = "ALL_GOOD";
+            
           }
         }
         @FXML
@@ -135,7 +137,7 @@ public class AddEventController implements Initializable {
         @FXML
         private void GetBackToTheMenu(){
           try{
-           Parent root = FXMLLoader.load(getClass().getResource("/MainPage.fxml"));
+           Parent root = FXMLLoader.load(getClass().getResource("/MainPAge.fxml"));
            Stage BackToTheMenuStage = (Stage) BackToMenuButton.getScene().getWindow();
            Scene BackToTheMenuScene = new Scene(root,600,400);
            BackToTheMenuStage.setScene(BackToTheMenuScene);
