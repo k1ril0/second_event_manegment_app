@@ -1,6 +1,7 @@
 package com.event.app;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -29,11 +30,11 @@ public class CalendarMenuController implements Initializable {
       ObservableList<Integer> CalendarYearList = FXCollections.observableArrayList(Years);
 
         @FXML
-        ChoiceBox<Integer> ChoseDataCalendar = new ChoiceBox<>();
+        ChoiceBox ChoseDataCalendar = new ChoiceBox<Integer>();
         @FXML  
-        ChoiceBox<String> ChoseMothCalendar = new ChoiceBox<>();
+        ChoiceBox ChoseMothCalendar = new ChoiceBox<String>();
         @FXML
-        ChoiceBox<Integer> ChoseYearCalendar = new ChoiceBox<>();
+        ChoiceBox ChoseYearCalendar = new ChoiceBox<Integer>();
         @FXML
         Button AcceptCalendarDateButton = new Button();
         @FXML
@@ -64,6 +65,7 @@ public class CalendarMenuController implements Initializable {
                 break;
                 case "ALL_GOOD":
                 System.out.println("ALL GOOD");
+                System.out.println(GetAllChoiceBox(ChoseYearCalendar, ChoseMothCalendar, ChoseDataCalendar));
                 break;
               }
 
@@ -98,6 +100,24 @@ public class CalendarMenuController implements Initializable {
              ex.printStackTrace();
             }
         }
+        // public ObservableList<Integer> getCalendarYearList() {
+        //   return CalendarYearList;
+        // }
+        // public ChoiceBox<Integer> getChoseDataCalendar() {
+        //   return ChoseDataCalendar;
+        // }
+        // public ChoiceBox<String> getChoseMothCalendar() {
+        //   return ChoseMothCalendar;
+        // }
+        public List<Object> GetAllChoiceBox(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox){
+          try{
+             return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue());
+          }catch(Exception e){
+            e.printStackTrace();
+            return null;
+          }
+        }
+        
 
     
 }
