@@ -1,5 +1,7 @@
 package com.event.app;
 
+import java.util.Date;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +36,10 @@ public class LogInPageController {
                 case"ALL_GOOD":
                 System.out.println("ALL GOOD");
                 GoToNextPage(LogInButton);
+                DataBaseController control = new DataBaseController();
+                String Name = NameField.getText();
+                String Password = PasswordField.getText();
+                control.AddUserFromLogIn(Name,Password);
                 break;
             }
         }catch(Exception ex){

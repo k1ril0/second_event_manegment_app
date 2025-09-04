@@ -88,6 +88,8 @@ public class AddEventController implements Initializable {
                 break;
                 case "ALL_GOOD":
                 System.out.println("ALL GOOD");
+                GetAllChoiceBoxFromAdd(TypeChoiceBox, MothChoiceBox, DayChoiceBox,TypeChoiceBox);
+                System.out.println(GetAllChoiceBoxFromAdd(TypeChoiceBox, MothChoiceBox, DayChoiceBox,TypeChoiceBox));
                 break;
               }
 
@@ -146,6 +148,14 @@ public class AddEventController implements Initializable {
             e.printStackTrace();
           }
 
+        }
+        public List<Object> GetAllChoiceBoxFromAdd(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox,ChoiceBox fifthchoiceBox){
+          try{
+            return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue(),fifthchoiceBox.getValue());
+          }catch(Exception e){
+            e.printStackTrace();
+            return null;
+          }
         }
     
       

@@ -100,15 +100,7 @@ public class CalendarMenuController implements Initializable {
              ex.printStackTrace();
             }
         }
-        // public ObservableList<Integer> getCalendarYearList() {
-        //   return CalendarYearList;
-        // }
-        // public ChoiceBox<Integer> getChoseDataCalendar() {
-        //   return ChoseDataCalendar;
-        // }
-        // public ChoiceBox<String> getChoseMothCalendar() {
-        //   return ChoseMothCalendar;
-        // }
+
         public List<Object> GetAllChoiceBox(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox){
           try{
              return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue());
