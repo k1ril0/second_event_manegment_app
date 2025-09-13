@@ -88,8 +88,7 @@ public class AddEventController implements Initializable {
                 break;
                 case "ALL_GOOD":
                 System.out.println("ALL GOOD");
-                GetAllChoiceBoxFromAdd(TypeChoiceBox, MothChoiceBox, DayChoiceBox,TypeChoiceBox);
-                System.out.println(GetAllChoiceBoxFromAdd(TypeChoiceBox, MothChoiceBox, DayChoiceBox,TypeChoiceBox));
+
                 break;
               }
 
@@ -149,14 +148,36 @@ public class AddEventController implements Initializable {
           }
 
         }
-        public List<Object> GetAllChoiceBoxFromAdd(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox,ChoiceBox fifthchoiceBox){
+        public List<Object> GetTimeFromDataChoiceBox(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox){
           try{
-            return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue(),fifthchoiceBox.getValue());
+            return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue());
           }catch(Exception e){
             e.printStackTrace();
             return null;
           }
         }
-    
+        // public void GetDataFromAddEventForDataBase(){
+        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(0);
+        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(1);
+        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(2);
+        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(3);
+        // }
+        // public String getMothChoiceBox() {
+        //   return MothChoiceBox.getValue().toString();
+        // }
+        // public Object getDayChoiceBox() {
+        //   return DayChoiceBox.getValue().toString();
+        // }
+        // public String getYearChoiceBox() {
+        //   return YearChoiceBox.getValue().toString();
+        // }
+        public Object getTypeChoiceBox() {
+          return TypeChoiceBox.getValue().toString();
+        }
+        public String getNameOfEventTextField() {
+          return NameOfEventTextField.toString();
+        }
+        
+        
       
 }

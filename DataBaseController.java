@@ -29,7 +29,7 @@ public class DataBaseController {
             AddStatment.setString(1,Username);
             AddStatment.setString(2, Password);
             int rowsAffected = AddStatment.executeUpdate();
-            while(rowsAffected >= 1){ 
+            while(rowsAffected < 0){ 
                 System.out.println("Rows has been updated : " + rowsAffected);
                 AddConnection.close();
             } 
@@ -41,7 +41,7 @@ public class DataBaseController {
         }
     }
     //working method of adding events to the database but there is wor to do in AddEventController where i should 
-    // manage howiject list of objects inn paramtres of this void so this i hope i fix in next update 
+    // manage how inject list of objects in paramtres of this void so this i hope i fix in next update 
     // what will be time when i comeback from vacation 
     public void AddEventToTheSceduel(String NameOfEvent,String TypeOfEvent,String DateOfEvent){
        Connection AddEventToTheSceduelConnection = getConnection();
@@ -53,7 +53,7 @@ public class DataBaseController {
           ADD_EVENT_SCHEDUEL.setString(2, NameOfEvent);
           ADD_EVENT_SCHEDUEL.setString(3, TypeOfEvent);
           int rowsAffected = ADD_EVENT_SCHEDUEL.executeUpdate();
-          while(rowsAffected >= 1 ){
+          while(rowsAffected > 0 ){
           System.out.println("Rows has been updated : " + rowsAffected);
           }
         }else{
