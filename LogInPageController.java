@@ -18,6 +18,13 @@ public class LogInPageController {
     @FXML
     private TextField PasswordField;
 
+    @FXML
+    private TextField SighInNameField;
+    @FXML
+    private TextField SighInPasswordField;
+    @FXML
+    private Button AcceptButtonSighIn;
+
 
     @FXML
     private void LogIn() throws Exception{
@@ -36,10 +43,8 @@ public class LogInPageController {
                 case"ALL_GOOD":
                 System.out.println("ALL GOOD");
                 GoToNextPage(LogInButton);
-                DataBaseController control = new DataBaseController();
-                String Name = NameField.getText();
-                String Password = PasswordField.getText();
-                control.AddUserFromLogIn(Name,Password);
+                DataBaseController controller = new DataBaseController();
+                controller.SearchUserInSighInBAse(SighInNameField.getText(),SighInPasswordField.getText());
                 break;
             }
         }catch(Exception ex){
@@ -73,5 +78,43 @@ public class LogInPageController {
        secondStage.setTitle("MAIN PPAGE");
        secondStage.show();       
     }
+    @FXML
+    private void SighIn() throws Exception{
+        AcceptButtonSighIn.setOnAction(e->{
+        switch (GetInfoAboutUser()) {
+        case "ALL_FIELDS_ARE_EMPTY":
+        System.out.println("ALL FIELDS ARE EMPTY");    
+        break;
+        case "NAME_FIELD_IS_EMPTY":
+        System.out.println("NAME FIELD IS EMPTY");
+        break;
+        case "PASSWORD_FIELD_IS_EMPTY":
+        System.out.println("PASSWORD FIELD IS EMPTY");
+        break;
+        case "ALL_GOOD":
+        System.out.println("ALL GOOD");
+        DataBaseController controller = new DataBaseController();
+        controller.AddUserFromSighIn(NameField.getText(),PasswordField.getText());
+        break;
+      }
+        });
+    }
     
+    private String GetInfoAboutUser(){
+        String InfoAboutUser;
+        try{
+           if(SighInNameField.getText().isEmpty()&&SighInPasswordField.getText().isEmpty()){
+           return InfoAboutUser = "ALL_FIELDS_ARE_EMPTY";
+           }if(SighInNameField.getText().isEmpty()&&!SighInPasswordField.getText().isEmpty()){
+           return InfoAboutUser = "NAME_FIELD_IS_EMPTY";
+           }if(!SighInNameField.getText().isEmpty()&&SighInPasswordField.getText().isEmpty()){
+           return InfoAboutUser = "PASSWORD_FIELD_IS_EMPTY";
+           }else{
+           return InfoAboutUser = "ALL_GOOD";
+           }
+        }catch(Exception e){
+         e.printStackTrace();
+         return null;
+        }
+    }
 }

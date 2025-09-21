@@ -88,7 +88,9 @@ public class AddEventController implements Initializable {
                 break;
                 case "ALL_GOOD":
                 System.out.println("ALL GOOD");
-
+                DataBaseController controller = new DataBaseController();
+                controller.AddEventToTheSceduel();
+                GetBackToTheMenu();
                 break;
               }
 
@@ -110,30 +112,37 @@ public class AddEventController implements Initializable {
           }else if(MothChoiceBox.getValue()==null && DayChoiceBox.getValue()==null && YearChoiceBox.getValue()==null){
            return StatusOfChoiceBox = "ALL_cHOICE_BOX_ARE_EMPTHY";
           }else{
-            GetBackToTheMenu();
             return StatusOfChoiceBox = "ALL_GOOD";
             
           }
         }
-        @FXML
-        private void CheckNameOfEvvent(){
-          AcceptButton1.setOnAction(e ->{
-            if(NameOfEventTextField.getText().isEmpty()){
-              System.out.println("Please Enter Name Of Event");
-            }else{
-              System.out.println("All good with name ");
-            }
-          });
+
+        private Boolean GetCheckedTypeOfChoiceBox(){
+          if(TypeChoiceBox.getValue()==null){
+            return false;
+          }else{
+            return true;
+          }
+        }
+
+
+        private Boolean GetCheckedNameOfEventChoiceBox(){
+          if(NameOfEventTextField.getText().isEmpty()){
+            return false;
+          }else{
+            return true;
+          }
+
+
         }
         @FXML
-        private void CheckTypOfEvent(){
-          AcceptButton11.setOnAction(e ->{
-          if(TypeChoiceBox.getValue()==null){
-            System.out.println("choose type of event please");
-          }else{
-            System.out.println("all good with typr of event ");
-          }       
-          });
+        private void GetAllStatusButton(){
+           if(GetCheckedNameOfEventChoiceBox()==false && GetCheckedTypeOfChoiceBox()==false && CheckchoiceBoxes()!="ALL_GOOD"){
+            System.out.println("Please fill all expected fields in this window to contiune");
+           }else{
+            System.out.println("All fields are filled you can check event in menu");
+            GetBackToTheMenu();
+           }
         }
         @FXML
         private void GetBackToTheMenu(){
@@ -156,27 +165,27 @@ public class AddEventController implements Initializable {
             return null;
           }
         }
-        // public void GetDataFromAddEventForDataBase(){
-        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(0);
-        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(1);
-        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(2);
-        //    GetAllChoiceBoxFromAdd(YearChoiceBox, TypeChoiceBox, DayChoiceBox, MothChoiceBox).get(3);
-        // }
-        // public String getMothChoiceBox() {
-        //   return MothChoiceBox.getValue().toString();
-        // }
-        // public Object getDayChoiceBox() {
-        //   return DayChoiceBox.getValue().toString();
-        // }
-        // public String getYearChoiceBox() {
-        //   return YearChoiceBox.getValue().toString();
-        // }
-        public Object getTypeChoiceBox() {
+
+        public String getTypeChoiceBox() {
           return TypeChoiceBox.getValue().toString();
         }
         public String getNameOfEventTextField() {
           return NameOfEventTextField.toString();
         }
+        public String getMothChoiceBox() {
+          return MothChoiceBox.toString();
+        }
+        public String getDayChoiceBox() {
+          return DayChoiceBox.toString();
+        }
+        public String getYearChoiceBox() {
+          return YearChoiceBox.toString();
+        }
+        public String GetStructerdTimeOfEvent(){
+          String StructerdTimeOfEvent;
+          return StructerdTimeOfEvent = getDayChoiceBox() + getMothChoiceBox() + getYearChoiceBox();
+        }
+        
         
         
       

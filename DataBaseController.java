@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+
+import com.mysql.cj.protocol.Resultset;
 
 public class DataBaseController {
     String name = "root";
@@ -20,10 +23,10 @@ public class DataBaseController {
         }
         return mainConnection;
     }
-    public void AddUserFromLogIn(String Username,String Password){
+    public void AddUserFromSighIn(String Username,String Password){
         Connection AddConnection = getConnection();
         try{
-            String Sql_Command_For_Add = "insert into LogInUsers (name,password) values (?,?)";
+            String Sql_Command_For_Add = "insert into SighInUsers (Name,password) values (?,?)";
            if(AddConnection!=null){
             PreparedStatement AddStatment = AddConnection.prepareStatement(Sql_Command_For_Add);
             AddStatment.setString(1,Username);
@@ -40,18 +43,37 @@ public class DataBaseController {
             e.printStackTrace();
         }
     }
+    public void SearchUserInSighInBAse(String name,String password){
+        String SQL_COMMAND_SERCHING = "select * from sighinusers where Name = ? and password = ?";
+        try{
+         Connection searchConnection = (getConnection());
+         PreparedStatement searchstaStatement = searchConnection.prepareStatement(SQL_COMMAND_SERCHING);
+         searchstaStatement.setString(1,name);
+         searchstaStatement.setString(2,password);
+         ResultSet resultOfSearching = searchstaStatement.executeQuery();
+         if(resultOfSearching.next()){
+            System.out.println("User has been found in our database");
+         }else{
+            System.out.println("Probllem in searching this user");
+         }
+
+        }catch(Exception e){
+            System.out.println("Error was spotted in search method :" + e.getMessage());
+        }
+    }
     //working method of adding events to the database but there is wor to do in AddEventController where i should 
     // manage how inject list of objects in paramtres of this void so this i hope i fix in next update 
     // what will be time when i comeback from vacation 
-    public void AddEventToTheSceduel(String NameOfEvent,String TypeOfEvent,String DateOfEvent){
+    public void AddEventToTheSceduel(){
        Connection AddEventToTheSceduelConnection = getConnection();
        try{
+        AddEventController ControllerForEventScheduel = new AddEventController();
         String Sql_Command_For_Add_Event_To_Scheduel = "insert into eventssceduel(DateOfEvent,NameOfEvent,TypeOfEvent) values(?,?,?)";
         if(AddEventToTheSceduelConnection !=null){
           PreparedStatement ADD_EVENT_SCHEDUEL = AddEventToTheSceduelConnection.prepareStatement(Sql_Command_For_Add_Event_To_Scheduel);
-          ADD_EVENT_SCHEDUEL.setString(1, DateOfEvent);
-          ADD_EVENT_SCHEDUEL.setString(2, NameOfEvent);
-          ADD_EVENT_SCHEDUEL.setString(3, TypeOfEvent);
+          ADD_EVENT_SCHEDUEL.setString(1, ControllerForEventScheduel.GetStructerdTimeOfEvent());
+          ADD_EVENT_SCHEDUEL.setString(2, ControllerForEventScheduel.getNameOfEventTextField());
+          ADD_EVENT_SCHEDUEL.setString(3, ControllerForEventScheduel.getTypeChoiceBox());
           int rowsAffected = ADD_EVENT_SCHEDUEL.executeUpdate();
           while(rowsAffected > 0 ){
           System.out.println("Rows has been updated : " + rowsAffected);
