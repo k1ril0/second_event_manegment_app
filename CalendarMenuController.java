@@ -16,6 +16,12 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 public class CalendarMenuController implements Initializable {
+
+
+  //i think we should replace names of month to just numbers.this change give me chance to minimaze code a littel a bit 
+   // but that something and also this replace give me acces to search efectevly events
+   // but there problem i dont wanna change that in user interface so i should just do something like this
+   // October = 10 moth of n-yeran and n-day
     
   
      String[] ListOfMoth = { "January","February","March","April","May","June",
@@ -109,6 +115,73 @@ public class CalendarMenuController implements Initializable {
             return null;
           }
         }
+        private void FindNumberOfMonth(){
+          int indexOfMonth = -1;
+          for(int i =0;i<ListOfMoth.length;i++){
+            if(ListOfMoth[i].equals(ChoseMothCalendar.getValue().toString())){
+              indexOfMonth = i + 1;
+              break;
+            }
+          }
+        }
+
+
+        
+        //here i wanna take fresh view i guues just reconstruct cllas and method in him 
+
+
+
+         @FXML   
+         ChoiceBox MonthChoiceBox = new ChoiceBox<String>();
+         @FXML
+         ChoiceBox DaysChoiceBox = new ChoiceBox<Integer>();
+         @FXML
+         ChoiceBox YearChoiceBox = new ChoiceBox<Integer>();
+
+        private void GetNumberOfMonthYouChoose(String ExpectedMonth){
+          int numberofMonth = -1;
+          for(int i = 0;i<ListOfMoth.length;i++){
+            if(ListOfMoth[i].equals(ExpectedMonth));
+            numberofMonth = i+1;
+            break;
+          }
+        }
+        private void CheckIfEvrythingIsField(){
+         switch (StatusOfFields()) {
+          case "ALL_EMPTY":
+          System.out.println("Select something from options that we have");  
+          break;
+           case "ONLY_DAYS_EMPTY":
+            System.out.println("Please choose day to contiune");
+          break;
+           case "ONLY_YEAR_EMPTY":
+            System.out.println("Please choose year to contiune");
+          break;
+           case "ONLY_MONTH_EMPTY":
+            System.out.println("Please choose month to contiune");
+          break;
+           case "ALL_GOOD":
+            System.out.println("All good you can contiune your experience");
+            String MonthThatUserChosse = MonthChoiceBox.getValue().toString();
+            GetNumberOfMonthYouChoose(MonthThatUserChosse);
+          break;
+         }
+        }
+        private String StatusOfFields(){
+          String Status;
+          if(MonthChoiceBox.getValue() ==null && DaysChoiceBox.getValue() == null && YearChoiceBox.getValue() ==null){
+             return Status = "ALL_EMPTY";
+          }if(MonthChoiceBox.getValue() != null && DaysChoiceBox.getValue() == null && YearChoiceBox.getValue() !=null){
+            return Status = "ONLY_DAYS_EMPTY";
+          }if(MonthChoiceBox.getValue() != null && DaysChoiceBox.getValue() != null && YearChoiceBox.getValue() == null){
+            return Status = "ONLY_YEAR_EMPTY";
+          }if(MonthChoiceBox.getValue() == null && DaysChoiceBox.getValue() != null && YearChoiceBox.getValue() != null){
+            return Status = "ONLY_MONTH_EMPTY";
+          }else{
+            return Status = "ALL_GOOD";
+          }
+        }
+        
         
 
     

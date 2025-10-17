@@ -64,18 +64,18 @@ public class DataBaseController {
     //working method of adding events to the database but there is wor to do in AddEventController where i should 
     // manage how inject list of objects in paramtres of this void so this i hope i fix in next update 
     // what will be time when i comeback from vacation 
-    public void AddEventToTheSceduel(){
+    public void AddEventToTheSceduel(String StructerdTimeOfEvent,String NameOfEvent,String TypeOfEvent){
        Connection AddEventToTheSceduelConnection = getConnection();
        try{
         AddEventController ControllerForEventScheduel = new AddEventController();
-        String Sql_Command_For_Add_Event_To_Scheduel = "insert into eventssceduel(DateOfEvent,NameOfEvent,TypeOfEvent) values(?,?,?)";
+        String Sql_Command_For_Add_Event_To_Scheduel = "insert into eventsscheduel(DateOfEvent,NameOfEvent,TypeOfEvent) values(?,?,?)";
         if(AddEventToTheSceduelConnection !=null){
           PreparedStatement ADD_EVENT_SCHEDUEL = AddEventToTheSceduelConnection.prepareStatement(Sql_Command_For_Add_Event_To_Scheduel);
-          ADD_EVENT_SCHEDUEL.setString(1, ControllerForEventScheduel.GetStructerdTimeOfEvent());
-          ADD_EVENT_SCHEDUEL.setString(2, ControllerForEventScheduel.getNameOfEventTextField());
-          ADD_EVENT_SCHEDUEL.setString(3, ControllerForEventScheduel.getTypeChoiceBox());
+          ADD_EVENT_SCHEDUEL.setString(1, StructerdTimeOfEvent);
+          ADD_EVENT_SCHEDUEL.setString(2, NameOfEvent);
+          ADD_EVENT_SCHEDUEL.setString(3, TypeOfEvent);
           int rowsAffected = ADD_EVENT_SCHEDUEL.executeUpdate();
-          while(rowsAffected > 0 ){
+          while(rowsAffected < 0 ){
           System.out.println("Rows has been updated : " + rowsAffected);
           }
         }else{
@@ -84,6 +84,27 @@ public class DataBaseController {
        }catch(Exception e){
         e.printStackTrace();
        }
+    }
+    public void AnotherVersionOfAddEventToThescheduel(String DataOfEvent,String NameOfEvent,String TypeOfEvent){
+        Connection AnotherAddConnection = getConnection();
+        String Another_SQL_COMMEND_FOR_ADD = "insert into eventsscheduel(DateOfEvent,NameOfevent,TypeOfEvent) values (?,?,?)";
+        try{
+          if(AnotherAddConnection != null){
+            PreparedStatement AnotherAddStatment = AnotherAddConnection.prepareStatement(Another_SQL_COMMEND_FOR_ADD);
+            AnotherAddStatment.setString(1, DataOfEvent);
+            AnotherAddStatment.setString(2, NameOfEvent);
+            AnotherAddStatment.setString(3, TypeOfEvent);
+            int rowsAffected = AnotherAddStatment.executeUpdate();
+            while( rowsAffected < 0){
+                System.out.println("Rows affected : " + rowsAffected);
+            }
+          }else{
+            System.out.println("Something went wrong you were adding events in the database");
+            AnotherAddConnection.close();
+          }
+        }catch(Exception e){
+          e.printStackTrace();
+        }
     }
     
 }

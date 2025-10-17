@@ -43,32 +43,32 @@ public class AddEventController implements Initializable {
     private Button BackToMenuButton;
 
 
-      String[] ListOfEvents = { "Conference","Workshop","Webinar","Seminar","Concert","Festival","Meetup","Networking Event",
-      "Fundraiser","Charity Event","Exhibition","Trade Show","Launch Event","Panel Discussion","Hackathon","Award Ceremony",
-      "Sports Event","Comedy Show","Theater Performance","Religious Event","Political Rally","Training Session","Retreat","Online Course",
-      "Job Fair","Book Signing","Art Opening","Community Gathering","Movie Screening","Gaming Tournament"};
+    //   String[] ListOfEvents = { "Conference","Workshop","Webinar","Seminar","Concert","Festival","Meetup","Networking Event",
+    //   "Fundraiser","Charity Event","Exhibition","Trade Show","Launch Event","Panel Discussion","Hackathon","Award Ceremony",
+    //   "Sports Event","Comedy Show","Theater Performance","Religious Event","Political Rally","Training Session","Retreat","Online Course",
+    //   "Job Fair","Book Signing","Art Opening","Community Gathering","Movie Screening","Gaming Tournament"};
 
-      String[] ListOfMoth = { "January","February","March","April","May","June",
-     "July","August","September","October","November","December"};
+    //   String[] ListOfMoth = { "January","February","March","April","May","June",
+    //  "July","August","September","October","November","December"};
 
-      Integer [] Days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+    //   Integer [] Days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
 
-      Integer [] Years = {2026,2027,2028,2029,2030};
+    //   Integer [] Years = {2026,2027,2028,2029,2030};
 
-      ObservableList<String> MothList = FXCollections.observableArrayList(ListOfMoth);  
-      ObservableList<Integer> DaysList = FXCollections.observableArrayList(Days);
-      ObservableList<Integer> YearList = FXCollections.observableArrayList(Years);
-      ObservableList<String> EventsList = FXCollections.observableArrayList(ListOfEvents);
+      // ObservableList<String> MothList = FXCollections.observableArrayList(ListOfMoth);  
+      // ObservableList<Integer> DaysList = FXCollections.observableArrayList(Days);
+      // ObservableList<Integer> YearList = FXCollections.observableArrayList(Years);
+      // ObservableList<String> EventsList = FXCollections.observableArrayList(ListOfEvents);
 
 
-        @Override
-        public void initialize(URL arg0, ResourceBundle arg1) {
+        // @Override
+        // public void initialize(URL arg0, ResourceBundle arg1) {
 
-          TypeChoiceBox.getItems().addAll(EventsList);
-          MothChoiceBox.getItems().addAll(MothList);
-          DayChoiceBox.getItems().addAll(DaysList);
-          YearChoiceBox.getItems().addAll(YearList);
-        }
+        //   TypeChoiceBox.getItems().addAll(EventsList);
+        //   MothChoiceBox.getItems().addAll(MothList);
+        //   DayChoiceBox.getItems().addAll(DaysList);
+        //   YearChoiceBox.getItems().addAll(YearList);
+        // }
         @FXML
         private void AcceptData(){
            AcceptButton.setOnAction(e ->{
@@ -89,8 +89,9 @@ public class AddEventController implements Initializable {
                 case "ALL_GOOD":
                 System.out.println("ALL GOOD");
                 DataBaseController controller = new DataBaseController();
-                controller.AddEventToTheSceduel();
-                GetBackToTheMenu();
+                // controller.AddEventToTheSceduel();
+                GetStructerdTimeOfEvent();
+                // GetBackToTheMenu();
                 break;
               }
 
@@ -141,6 +142,9 @@ public class AddEventController implements Initializable {
             System.out.println("Please fill all expected fields in this window to contiune");
            }else{
             System.out.println("All fields are filled you can check event in menu");
+            DataBaseController AddEventDBController = new DataBaseController();
+            System.out.println(GetStructerdTimeOfEvent());
+            AddEventDBController.AddEventToTheSceduel(GetStructerdTimeOfEvent(),getNameOfEventTextField(),getTypeChoiceBox());
             GetBackToTheMenu();
            }
         }
@@ -157,9 +161,9 @@ public class AddEventController implements Initializable {
           }
 
         }
-        public List<Object> GetTimeFromDataChoiceBox(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox){
+        public List<Object> GetTimeFromDataChoiceBox(ChoiceBox firstChoiceBox,Integer secondChoiceBox,ChoiceBox thirdChoiceBox){
           try{
-            return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue());
+            return List.of(firstChoiceBox.getValue(),secondChoiceBox,thirdChoiceBox.getValue());
           }catch(Exception e){
             e.printStackTrace();
             return null;
@@ -167,26 +171,185 @@ public class AddEventController implements Initializable {
         }
 
         public String getTypeChoiceBox() {
-          return TypeChoiceBox.getValue().toString();
+           if(TypeChoiceBox.getValue() != null){
+              String TypeOfChoiceBox;
+              return TypeOfChoiceBox = TypeChoiceBox.getValue().toString();
+           }else{
+            return null;
+           }
         }
         public String getNameOfEventTextField() {
-          return NameOfEventTextField.toString();
+          if(!NameOfEventTextField.getText().isEmpty()){
+             return NameOfEventTextField.getText();
+          }else{
+            return null;
+          }
         }
         public String getMothChoiceBox() {
-          return MothChoiceBox.toString();
+          if(MothChoiceBox !=null){
+           return MothChoiceBox.getValue().toString();
+          }else{
+            return null;
+          }
         }
         public String getDayChoiceBox() {
-          return DayChoiceBox.toString();
+          if(DayChoiceBox.getValue()!=null){
+             return DayChoiceBox.getValue().toString();
+          }else{
+            return null;
+          }
         }
         public String getYearChoiceBox() {
-          return YearChoiceBox.toString();
+          if(YearChoiceBox.getValue() != null){
+          return YearChoiceBox.getValue().toString();
+          }else{
+            return null;
+          }
         }
         public String GetStructerdTimeOfEvent(){
-          String StructerdTimeOfEvent;
-          return StructerdTimeOfEvent = getDayChoiceBox() + getMothChoiceBox() + getYearChoiceBox();
+          String Day = getDayChoiceBox();  
+          String Moth = getMothChoiceBox();
+          String Year = getYearChoiceBox();
+          String AllData;
+          return AllData = "[Day: " + Day + "; Moth: " + Moth + "; Year: " + Year + "] ";
         }
+
+
+
+
+
+
+
+
+
+
+
+
         
-        
-        
+       //reimagend code for this class
+
+
+
+
+
+
+
+
+
+
+       String[] ListOfEvents = { "Conference","Workshop","Webinar","Seminar","Concert","Festival","Meetup","Networking Event",
+      "Fundraiser","Charity Event","Exhibition","Trade Show","Launch Event","Panel Discussion","Hackathon","Award Ceremony",
+      "Sports Event","Comedy Show","Theater Performance","Religious Event","Political Rally","Training Session","Retreat","Online Course",
+      "Job Fair","Book Signing","Art Opening","Community Gathering","Movie Screening","Gaming Tournament"};
+
+      String[] ListOfMoth = { "January","February","March","April","May","June",
+     "July","August","September","October","November","December"};
+
+      Integer [] Days = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31};
+
+      Integer [] Years = {2026,2027,2028,2029,2030};
+
+
+      ObservableList MonthList = FXCollections.observableArrayList(ListOfMoth);
+      ObservableList DayList = FXCollections.observableArrayList(Days);
+      ObservableList YearList = FXCollections.observableArrayList(Years);
+      ObservableList TypeList = FXCollections.observableArrayList(ListOfEvents);
+       
+       
+
+       @FXML
+       ChoiceBox MonthChoiceBoxForAdd = new ChoiceBox<String>();
+       @FXML
+       ChoiceBox DayChoiceBoxForAdd = new ChoiceBox<String>();
+       @FXML
+       ChoiceBox YearChoiceBoxForAdd = new ChoiceBox<String>();
+       @FXML
+       ChoiceBox TypeOfEventChoiceBoxForAdd = new ChoiceBox<String>();
+       @FXML
+       TextField NamefieldForAdd = new TextField();
+
+       private String CheckAllStatmentsForAdd(){
+        String StatusForAdd;
+        if(MonthChoiceBoxForAdd.getValue() == null && YearChoiceBoxForAdd.getValue() == null && DayChoiceBoxForAdd.getValue() ==null && TypeOfEventChoiceBoxForAdd.getValue() == null && NamefieldForAdd.getText().isEmpty()){
+         return StatusForAdd = "ALL_EMPTY";
+        }if(MonthChoiceBoxForAdd.getValue() == null && YearChoiceBoxForAdd.getValue() != null && DayChoiceBoxForAdd.getValue() != null && TypeOfEventChoiceBoxForAdd.getValue() != null && !NamefieldForAdd.getText().isEmpty()){
+          return StatusForAdd = "ONLY_MONTH";
+        }if(MonthChoiceBoxForAdd.getValue() != null && YearChoiceBoxForAdd.getValue() == null && DayChoiceBoxForAdd.getValue() != null && TypeOfEventChoiceBoxForAdd.getValue() != null && !NamefieldForAdd.getText().isEmpty()){
+          return StatusForAdd = "ONLY_YEAR";
+        }if(MonthChoiceBoxForAdd.getValue() != null && YearChoiceBoxForAdd.getValue() != null && DayChoiceBoxForAdd.getValue() == null && TypeOfEventChoiceBoxForAdd.getValue() != null && !NamefieldForAdd.getText().isEmpty()){
+          return StatusForAdd = "ONLY_DAY";
+        }if(MonthChoiceBoxForAdd.getValue() != null && YearChoiceBoxForAdd.getValue() != null && DayChoiceBoxForAdd.getValue() !=null && TypeOfEventChoiceBoxForAdd.getValue() == null && !NamefieldForAdd.getText().isEmpty()){
+          return StatusForAdd = "ONLY_TYPE";
+        }if(MonthChoiceBoxForAdd.getValue()!=null && YearChoiceBoxForAdd.getValue() != null && DayChoiceBoxForAdd.getValue() != null && TypeOfEventChoiceBoxForAdd.getValue() != null && NamefieldForAdd.getText().isEmpty()){
+          return StatusForAdd = "ONLY_NAME_FIELD";
+        }else{
+          return StatusForAdd = "ALL_GOOD";
+        }
+       }
+      @FXML
+      private void CheckIfEvrythingIsFieldForAdd(){
+        switch (CheckAllStatmentsForAdd()) {
+          case "ALL_EMPTY":
+          System.out.println("ALL EMPTY"); 
+          break;
+          case "ONLY_MONTH":
+          System.out.println("EMPTY ONLY MONTH");  
+          break;
+          case "ONLY_YEAR":
+          System.out.println("EMPTY ONLY YEAR");  
+          break;
+          case "ONLY_DAY":
+          System.out.println("EMPTY ONLY DAY");  
+          break;
+          case "ONLY_TYPE":
+          System.out.println("EMPTY ONLY TYPE");  
+          break;
+          case "ONLY_NAME_FIELD":
+          System.out.println("EMPTY ONLY NAME FIELD");  
+          break;
+          case "ALL_GOOD":
+          // GetTimeFromDataChoiceBox(DayChoiceBoxForAdd,GetNumberOfMonthUserChoose(MonthChoiceBoxForAdd),YearChoiceBoxForAdd);
+          // GetNumberOfMonthUserChoose(DayChoiceBoxForAdd);
+           DataBaseController controllerForAdd  = new DataBaseController();
+          // controllerForAdd.AddEventToTheSceduel(GetTimeFromDataChoiceBox(DayChoiceBoxForAdd, GetNumberOfMonthUserChoose(MonthChoiceBoxForAdd), YearChoiceBoxForAdd));
+          controllerForAdd.AnotherVersionOfAddEventToThescheduel(GetAllrequierdDataForAddToTheDataBase(),GetNameOfeventForAdd(),GetTypeOfEventForAdd());
+          System.out.println("ALL GOOd");
+          GetBackToTheMenu();  
+          break;
+        }
+      }
+      private Integer GetNumberOfMonthUserChoose(ChoiceBox<String> reqiueredChoiceBox){
+        int indexOfMonth = -1;
+        String ChoosenMonth = reqiueredChoiceBox.getValue();
+        for(int i = 0;i<ListOfMoth.length;i++){
+          if(ListOfMoth[i].equals(ChoosenMonth)){
+            return indexOfMonth = i+1;
+          }else{
+            System.out.println("SOMETHING WENT WRONG IN CALCULATING");
+          }
+        }
+        return null;
+      }
+      public  String   GetAllrequierdDataForAddToTheDataBase(){
+        String DataOfEventsGoing;
+        return DataOfEventsGoing = GetNumberOfMonthUserChoose(MonthChoiceBoxForAdd)+ "." + DayChoiceBoxForAdd.getValue().toString()+ "." + YearChoiceBoxForAdd.getValue().toString();
+      }
+      public  String GetTypeOfEventForAdd(){
+       String TypeOfEvent;
+       return TypeOfEvent = TypeOfEventChoiceBoxForAdd.getValue().toString();
+      }
+      public String GetNameOfeventForAdd(){
+        String NameOfEvent;
+        return NameOfEvent = NamefieldForAdd.getText(); 
+      }
+
       
+      @Override
+      public void initialize(URL arg0, ResourceBundle arg1) {
+       MonthChoiceBoxForAdd.getItems().addAll(MonthList);
+       DayChoiceBoxForAdd.getItems().addAll(DayList);
+       YearChoiceBoxForAdd.getItems().addAll(YearList);
+       TypeOfEventChoiceBoxForAdd.getItems().addAll(TypeList);
+      }
+
 }
