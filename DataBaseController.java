@@ -64,27 +64,27 @@ public class DataBaseController {
     //working method of adding events to the database but there is wor to do in AddEventController where i should 
     // manage how inject list of objects in paramtres of this void so this i hope i fix in next update 
     // what will be time when i comeback from vacation 
-    public void AddEventToTheSceduel(String StructerdTimeOfEvent,String NameOfEvent,String TypeOfEvent){
-       Connection AddEventToTheSceduelConnection = getConnection();
-       try{
-        AddEventController ControllerForEventScheduel = new AddEventController();
-        String Sql_Command_For_Add_Event_To_Scheduel = "insert into eventsscheduel(DateOfEvent,NameOfEvent,TypeOfEvent) values(?,?,?)";
-        if(AddEventToTheSceduelConnection !=null){
-          PreparedStatement ADD_EVENT_SCHEDUEL = AddEventToTheSceduelConnection.prepareStatement(Sql_Command_For_Add_Event_To_Scheduel);
-          ADD_EVENT_SCHEDUEL.setString(1, StructerdTimeOfEvent);
-          ADD_EVENT_SCHEDUEL.setString(2, NameOfEvent);
-          ADD_EVENT_SCHEDUEL.setString(3, TypeOfEvent);
-          int rowsAffected = ADD_EVENT_SCHEDUEL.executeUpdate();
-          while(rowsAffected < 0 ){
-          System.out.println("Rows has been updated : " + rowsAffected);
-          }
-        }else{
-            System.out.println("Problem has been ocured in AddEventToScheduel mathod from DataBaseController");
-        }
-       }catch(Exception e){
-        e.printStackTrace();
-       }
-    }
+    // public void AddEventToTheSceduel(String StructerdTimeOfEvent,String NameOfEvent,String TypeOfEvent){
+    //    Connection AddEventToTheSceduelConnection = getConnection();
+    //    try{
+    //     AddEventController ControllerForEventScheduel = new AddEventController();
+    //     String Sql_Command_For_Add_Event_To_Scheduel = "insert into eventsscheduel(DateOfEvent,NameOfEvent,TypeOfEvent) values(?,?,?)";
+    //     if(AddEventToTheSceduelConnection !=null){
+    //       PreparedStatement ADD_EVENT_SCHEDUEL = AddEventToTheSceduelConnection.prepareStatement(Sql_Command_For_Add_Event_To_Scheduel);
+    //       ADD_EVENT_SCHEDUEL.setString(1, StructerdTimeOfEvent);
+    //       ADD_EVENT_SCHEDUEL.setString(2, NameOfEvent);
+    //       ADD_EVENT_SCHEDUEL.setString(3, TypeOfEvent);
+    //       int rowsAffected = ADD_EVENT_SCHEDUEL.executeUpdate();
+    //       while(rowsAffected < 0 ){
+    //       System.out.println("Rows has been updated : " + rowsAffected);
+    //       }
+    //     }else{
+    //         System.out.println("Problem has been ocured in AddEventToScheduel mathod from DataBaseController");
+    //     }
+    //    }catch(Exception e){
+    //     e.printStackTrace();
+    //    }
+    // }
     public void AnotherVersionOfAddEventToThescheduel(String DataOfEvent,String NameOfEvent,String TypeOfEvent){
         Connection AnotherAddConnection = getConnection();
         String Another_SQL_COMMEND_FOR_ADD = "insert into eventsscheduel(DateOfEvent,NameOfevent,TypeOfEvent) values (?,?,?)";
@@ -104,6 +104,23 @@ public class DataBaseController {
           }
         }catch(Exception e){
           e.printStackTrace();
+        }
+    }
+    //For see class 
+    public void GetDataForSeeEventController(String DateOfEvent){
+        Connection SearchDataConnection = getConnection();
+        try{
+           String SEARCH_DATA_SQL_COMMAND = "select * from eventsscheduel where DateOfEvent = ?";
+           PreparedStatement searchStatement = SearchDataConnection.prepareStatement(SEARCH_DATA_SQL_COMMAND);
+           searchStatement.setString(1, DateOfEvent);
+           ResultSet ResultOfSearchingData = searchStatement.executeQuery();
+           if(ResultOfSearchingData.next()){
+             System.out.println("Date has been found in database");
+           }else{
+            System.out.println("Dont find event planned on this date,go to add page");
+           }
+        }catch(Exception e){
+           e.printStackTrace();
         }
     }
     

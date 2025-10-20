@@ -46,84 +46,12 @@ public class CalendarMenuController implements Initializable {
         @FXML
         private Button BackFromSeeEvent;
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-      ChoseDataCalendar.getItems().addAll(CalendarDaysList);
-      ChoseMothCalendar.getItems().addAll(CalendarMothList);
-      ChoseYearCalendar.getItems().addAll(CalendarYearList); 
-    }
-            @FXML
-        private void AcceptData(){
-           AcceptCalendarDateButton.setOnAction(e ->{
-            try{
-              switch (CheckchoiceBoxes()) {
-                case "MOTH_CHOICE_BOX_IS_EMPTHY":
-                System.out.println("MOTH CHOICE BOX IS EMPTHY");  
-                break;
-                case "DAY_CHOICE_BOX_IS_EMPTHY":
-                System.out.println("DAY CHOICE BOX IS EMPTHY");
-                break;
-                case "YEAR_CHOICE_BOX_IS_EMPTHY":
-                System.out.println("YEAR CHOICE BOX IS EMPTHY");
-                break;
-                case "ALL_cHOICE_BOX_ARE_EMPTHY":
-                System.out.println("ALL cHOICE BOX ARE EMPTHY");
-                break;
-                case "ALL_GOOD":
-                System.out.println("ALL GOOD");
-                System.out.println(GetAllChoiceBox(ChoseYearCalendar, ChoseMothCalendar, ChoseDataCalendar));
-                break;
-              }
-
-            }catch(Exception ex){
-              ex.printStackTrace();
-            }
-           });
-        }
-        private String CheckchoiceBoxes(){
-          String StatusOfChoiceBox;
-          if(ChoseMothCalendar.getValue()==null && ChoseDataCalendar.getValue() != null && ChoseYearCalendar.getValue() != null ){
-           return StatusOfChoiceBox = "MOTH_CHOICE_BOX_IS_EMPTHY";
-          }else if(ChoseDataCalendar.getValue()==null && ChoseMothCalendar.getValue() != null && ChoseYearCalendar.getValue() != null){
-           return StatusOfChoiceBox = "DAY_CHOICE_BOX_IS_EMPTHY";
-          }else if(ChoseYearCalendar.getValue()==null && ChoseMothCalendar.getValue() != null && ChoseDataCalendar.getValue() != null){
-           return StatusOfChoiceBox = "YEAR_CHOICE_BOX_IS_EMPTHY";
-          }else if(ChoseMothCalendar.getValue()==null && ChoseDataCalendar.getValue()==null && ChoseYearCalendar.getValue()==null){
-           return StatusOfChoiceBox = "ALL_cHOICE_BOX_ARE_EMPTHY";
-          }else{
-            return StatusOfChoiceBox = "ALL_GOOD";
-          }
-        }
-        @FXML
-        private void BackFromSeeEvent(){
-            try{
-           Parent root = FXMLLoader.load(getClass().getResource("/MainPAge.fxml"));
-           Stage BackToTheMenuStage = (Stage) BackFromSeeEvent.getScene().getWindow();
-           Scene BackToTheMenuScene = new Scene(root,600,400);
-           BackToTheMenuStage.setScene(BackToTheMenuScene);
-           BackToTheMenuStage.show();
-            }catch(Exception ex){
-             ex.printStackTrace();
-            }
-        }
-
-        public List<Object> GetAllChoiceBox(ChoiceBox firstChoiceBox,ChoiceBox secondChoiceBox,ChoiceBox thirdChoiceBox){
-          try{
-             return List.of(firstChoiceBox.getValue(),secondChoiceBox.getValue(),thirdChoiceBox.getValue());
-          }catch(Exception e){
-            e.printStackTrace();
-            return null;
-          }
-        }
-        private void FindNumberOfMonth(){
-          int indexOfMonth = -1;
-          for(int i =0;i<ListOfMoth.length;i++){
-            if(ListOfMoth[i].equals(ChoseMothCalendar.getValue().toString())){
-              indexOfMonth = i + 1;
-              break;
-            }
-          }
-        }
+    // @Override
+    // public void initialize(URL arg0, ResourceBundle arg1) {
+    //   ChoseDataCalendar.getItems().addAll(CalendarDaysList);
+    //   ChoseMothCalendar.getItems().addAll(CalendarMothList);
+    //   ChoseYearCalendar.getItems().addAll(CalendarYearList); 
+    // }
 
 
         
@@ -146,6 +74,7 @@ public class CalendarMenuController implements Initializable {
             break;
           }
         }
+        @FXML
         private void CheckIfEvrythingIsField(){
          switch (StatusOfFields()) {
           case "ALL_EMPTY":
@@ -162,11 +91,12 @@ public class CalendarMenuController implements Initializable {
           break;
            case "ALL_GOOD":
             System.out.println("All good you can contiune your experience");
-            String MonthThatUserChosse = MonthChoiceBox.getValue().toString();
-            GetNumberOfMonthYouChoose(MonthThatUserChosse);
+            DataBaseController controller = new DataBaseController();
+            controller.GetDataForSeeEventController(GetAllrequierdDataForAddToTheDataBase());
           break;
          }
         }
+        @FXML
         private String StatusOfFields(){
           String Status;
           if(MonthChoiceBox.getValue() ==null && DaysChoiceBox.getValue() == null && YearChoiceBox.getValue() ==null){
@@ -181,7 +111,41 @@ public class CalendarMenuController implements Initializable {
             return Status = "ALL_GOOD";
           }
         }
-        
+           public  String GetAllrequierdDataForAddToTheDataBase(){
+        String DataOfEventsGoing;
+        return DataOfEventsGoing = GetNumberOfMonthUserChoose(MonthChoiceBox)+ "." + DaysChoiceBox.getValue().toString()+ "." + YearChoiceBox.getValue().toString();
+      }
+       private Integer GetNumberOfMonthUserChoose(ChoiceBox<String> reqiueredChoiceBox){
+        int indexOfMonth = -1;
+        String ChoosenMonth = reqiueredChoiceBox.getValue();
+        for(int i = 0;i<ListOfMoth.length;i++){
+          if(ListOfMoth[i].equals(ChoosenMonth)){
+            return indexOfMonth = i+1;
+          }else{
+            System.out.println("SOMETHING WENT WRONG IN CALCULATING");
+          }
+        }
+        return null;
+      }
+        @FXML
+        private void GetBackToTheMenu(){
+          try{
+           Parent root = FXMLLoader.load(getClass().getResource("/MainPAge.fxml"));
+           Stage BackToTheMenuStage = (Stage) BackFromSeeEvent.getScene().getWindow();
+           Scene BackToTheMenuScene = new Scene(root,600,400);
+           BackToTheMenuStage.setScene(BackToTheMenuScene);
+           BackToTheMenuStage.show();
+          }catch(Exception e){
+            e.printStackTrace();
+          }
+
+}
+@Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+      DaysChoiceBox.getItems().addAll(CalendarDaysList);
+      MonthChoiceBox.getItems().addAll(CalendarMothList);
+      YearChoiceBox.getItems().addAll(CalendarYearList); 
+    }
         
 
     
