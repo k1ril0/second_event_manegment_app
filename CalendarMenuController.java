@@ -16,13 +16,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 public class CalendarMenuController implements Initializable {
-
-
-  //i think we should replace names of month to just numbers.this change give me chance to minimaze code a littel a bit 
-   // but that something and also this replace give me acces to search efectevly events
-   // but there problem i dont wanna change that in user interface so i should just do something like this
-   // October = 10 moth of n-yeran and n-day
-    
   
      String[] ListOfMoth = { "January","February","March","April","May","June",
      "July","August","September","October","November","December"};
@@ -45,19 +38,6 @@ public class CalendarMenuController implements Initializable {
         Button AcceptCalendarDateButton = new Button();
         @FXML
         private Button BackFromSeeEvent;
-
-    // @Override
-    // public void initialize(URL arg0, ResourceBundle arg1) {
-    //   ChoseDataCalendar.getItems().addAll(CalendarDaysList);
-    //   ChoseMothCalendar.getItems().addAll(CalendarMothList);
-    //   ChoseYearCalendar.getItems().addAll(CalendarYearList); 
-    // }
-
-
-        
-        //here i wanna take fresh view i guues just reconstruct cllas and method in him 
-
-
 
          @FXML   
          ChoiceBox MonthChoiceBox = new ChoiceBox<String>();
@@ -93,6 +73,7 @@ public class CalendarMenuController implements Initializable {
             System.out.println("All good you can contiune your experience");
             DataBaseController controller = new DataBaseController();
             controller.GetDataForSeeEventController(GetAllrequierdDataForAddToTheDataBase());
+            controller.GetNameOfEventPlannedOnThisDate(GetAllrequierdDataForAddToTheDataBase());
           break;
          }
         }
@@ -147,6 +128,4 @@ public class CalendarMenuController implements Initializable {
       YearChoiceBox.getItems().addAll(CalendarYearList); 
     }
         
-
-    
 }

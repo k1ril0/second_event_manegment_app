@@ -122,6 +122,28 @@ public class DataBaseController {
         }catch(Exception e){
            e.printStackTrace();
         }
+     }
+
+    public void GetNameOfEventPlannedOnThisDate(String DateOfEvent){
+        Connection GetNameOfEventPlannedOnThisDateConnection = getConnection();
+        String GetNameOfEventPlannedOnThisDateConnection_SQL_Command = "select * from eventsscheduel where DateOfEvent = ?";
+        try{
+         PreparedStatement GetNameOfEventPlannedOnThisDateStatment = GetNameOfEventPlannedOnThisDateConnection.prepareStatement(GetNameOfEventPlannedOnThisDateConnection_SQL_Command);
+         GetNameOfEventPlannedOnThisDateStatment.setString(1,DateOfEvent);
+         ResultSet resultOfsearchOfEvent = GetNameOfEventPlannedOnThisDateStatment.executeQuery();
+         if(resultOfsearchOfEvent.next()){
+            do{
+             String TypeOfEvent = resultOfsearchOfEvent.getString("TypeOfEvent");
+             String NameOFEvent = resultOfsearchOfEvent.getString("NameOfevent");
+             System.out.println("Name Of Events planned on this date is : " + NameOFEvent + ", And Type Of events is : " + TypeOfEvent);
+            } while(resultOfsearchOfEvent.next());
+         } else{
+            System.out.println("Dont find events on this date pls insert diffrent date ");
+         }
+      }catch(Exception e){
+         e.printStackTrace();
+      }
     }
+    
     
 }
